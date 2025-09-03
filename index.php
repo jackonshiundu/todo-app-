@@ -28,17 +28,22 @@ $result = $conn->query("SELECT * FROM todos ORDER BY created_at DESC");
         <?php while ($row = $result->fetch_assoc()): ?>
             <li>
                 <span class="<?= $row['is_complete'] ? 'completed' : '' ?>">
-                    <?= $row['task'] ?>
+                    <?= htmlspecialchars($row['task']) ?>
                 </span>
 
                 <!-- Toggle complete/incomplete -->
-                <a href="toggle_complete.php?id=<?= $row['id'] ?>">
+                <a href="toggle_complete.php?id=<?php $row['id'] ?>">
                     [<?= $row['is_complete'] ? 'Undo' : 'Complete' ?>]
-                </a>
+                </a>~
 
                 <!-- Delete task -->
                 <a href="delete_todo.php?id=<?= $row['id'] ?>" onclick="return confirm('Delete this task?')">
                     [Delete]
+                </a>
+                <!-- Edit task -->
+
+                <a href="edit_todo.php?id=<?= $row['id'] ?>">
+                    [Edit]
                 </a>
             </li>
         <?php endwhile; ?>
